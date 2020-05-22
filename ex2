@@ -26,7 +26,12 @@ Print example.
 (* exercise one_a *)
 Lemma one_a : (A -> B -> C) -> A -> (A -> C) -> B -> C.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+intro z.
+intro w.
+apply z.
+apply y.
 
 Qed.
 
@@ -35,7 +40,15 @@ Print one_a.
 (* exercise one_b *)
 Lemma one_b : ((A -> B) -> (C ->D)) -> C -> B -> D.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+intro z.
+
+apply x.
+intro w.
+apply z.
+apply y.
+
 
 Qed.
 
@@ -44,7 +57,13 @@ Print one_b.
 (* exercise one_c *)
 Lemma one_c : (A -> B) -> (A -> C) -> A -> B -> C.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+intro z.
+intro w.
+
+apply y.
+apply z.
 
 Qed.
 
@@ -65,7 +84,12 @@ Print one_c.
    NB: the converse is not true intuitionistically *)
 Lemma AnotnotA : A -> ~ ~ A .
 Proof.
-(*! proof *)
+unfold not.
+
+intro x.
+intro y.
+apply y.
+apply x.
 
 Qed.
 
