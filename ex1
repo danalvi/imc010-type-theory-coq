@@ -142,16 +142,31 @@ Print exfalso.
 (* exercise; see also the course notes *)
 Lemma contrapositive : (A -> B) -> ~ B -> ~ A.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+unfold not.
+intro z.
+apply y.
+apply x.
+apply z.
+
 
 Qed.
 
 Print contrapositive.
 
 (* exercise; compare with weakpeirce *)
-Lemma negations : (A ->A).
+Lemma negations :  ~~(~~A ->A).
 Proof.
-(*! proof *)
+unfold not .
+intro x.
+elim x.
+intro y.
+elim y.
+intro z.
+apply x.
+intro w.
+apply z.
 
 Qed.
 
@@ -169,7 +184,11 @@ Print negations.
 (* exercise *)
 Lemma intro_and : A -> B -> A /\ B.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+split .
+apply x.
+apply y.
 
 Qed.
 
@@ -178,7 +197,11 @@ Print intro_and.
 (* exercise *)
 Lemma elim_and : A /\ B -> A.
 Proof.
-(*! proof *)
+intro x.
+elim x.
+intro y.
+intro z.
+apply y.
 
 Qed.
 
@@ -187,7 +210,9 @@ Print elim_and.
 (* exercise *)
 Lemma intro_or : A -> A \/ B.
 Proof.
-(*! proof *)
+intro x.
+left .
+apply x.
 
 Qed.
 
@@ -196,12 +221,13 @@ Print intro_or.
 (* exercise *)
 Lemma elim_or : A \/ B -> (A -> C) -> (B -> C) -> C.
 Proof.
-(*! proof *)
+intro x.
+intro y.
+intro z.
+elim x.
+apply y.
+apply z.
 
 Qed.
 
 Print elim_or
-
-~, [21.05.20 16:10]
-[In reply to Qazi Danish Amjad Alvi]
--6
