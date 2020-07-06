@@ -1,6 +1,0 @@
-
-
-Definition not_empty (a: alphabet) : bool := match a with
-  | nil => false
-  | _ => true
-end.
