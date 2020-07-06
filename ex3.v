@@ -66,7 +66,27 @@ Qed.
 (* exercise; you need the "apply with". *)
 Lemma two : peirce -> double_negation.
 Proof.
-(*! proof *)
+
+
+
+unfold peirce .
+
+unfold double_negation .
+unfold not .
+
+intro x.
+intro y.
+intro z.
+
+apply x with (A := y) (B := False) .
+
+intro w.
+
+
+elim z. 
+
+apply w.
+
 
 Qed.
 
