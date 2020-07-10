@@ -364,6 +364,6 @@ Inductive palindrome : natlist -> Prop :=
   | palindrome0 : palindrome nil
   | palindrome1 : forall n : nat, palindrome (cons n nil ) 
   | palindrome2 : forall n:nat, forall l k:natlist,
-        without_last n k l -> palindrome l -> palindrome (cons n k) .
+        without_last n k l -> palindrome l -> palindrome (cons n k) . 
 
 

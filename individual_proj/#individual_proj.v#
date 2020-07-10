@@ -1,0 +1,93 @@
+Require Import List Nat.
+(** For lists notations like [] etc *)
+Export ListNotations.
+Definition premap A := list (option A).
+
+Definition is_Some {A} (x : option A) : bool :=
+match x with
+| Some _ => true
+| None => false
+end.
+
+Fixpoint premap_wf {A} (may_be_nil : bool) (m : premap A) : bool :=
+match m with
+| [] => may_be_nil
+| x :: m => premap_wf (is_Some x) m
+end.
+
+Definition is_True (b : bool) :=
+if b then True else False.
+Definition map_wf {A : Type} (m : premap A) : Prop := is_True (premap_wf true m).
+Record map (A : Type) := make_map {
+map_car : premap A;
+map_prf : map_wf map_car
+}.
+(** Make the parameter [A] implicit *)
+Arguments make_map {_} _ _.
+Arguments map_car {_} _.
+Arguments map_prf {_} _.
+
+Fixpoint prelookup {A : Type} (m : premap A) (n : nat) : option A :=
+match m with
+| [] => None
+| x::m' =>
+  match n with
+  | O => x
+  | S n' => prelookup m' n'
+  end
+end.
+
+Definition lookup {A : Type} (m : map A) (n : nat) : option A :=
+prelookup (map_car m) n.
+
+Definition preempty {A : Type} : premap A := [].
+
+Fixpoint presingleton {A : Type} (k : nat) (v : A) : premap A :=
+match k with
+| O => [Some v]
+| S k' => None :: presingleton k' v
+end.
+
+Lemma preempty_wf (A : Type) : map_wf (@preempty A).
+Proof .
+split .
+Qed .
+
+Lemma presingleton_wf {A : Type} k (v : A) b : is_True (premap_wf b (presingleton k v)).
+Proof .
+unfold is_True .
+destruct b .
+
+induction k .
+
+unfold presingleton .
+unfold premap_wf .
+unfold is_Some .
+split .
+
+simpl .
+
+induction k .
+unfold presingleton .
+unfold premap_wf .
+unfold is_Some .
+split .
+
+apply IHk .
+
+induction k .
+unfold presingleton .
+unfold premap_wf .
+unfold is_Some .
+split .
+
+apply IHk .
+
+
+Qed .
+
+Check map_car .
+
+Definition empty {A : Type} : map A := map_car map_wf (preempty A).
+
+
