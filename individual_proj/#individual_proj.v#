@@ -55,7 +55,6 @@ Qed .
 
 Lemma presingleton_wf {A : Type} k (v : A) b : is_True (premap_wf b (presingleton k v)).
 Proof .
-unfold is_True .
 destruct b .
 
 induction k .
@@ -63,6 +62,7 @@ induction k .
 unfold presingleton .
 unfold premap_wf .
 unfold is_Some .
+unfold is_True .
 split .
 
 simpl .
@@ -71,6 +71,7 @@ induction k .
 unfold presingleton .
 unfold premap_wf .
 unfold is_Some .
+unfold is_True .
 split .
 
 apply IHk .
@@ -79,6 +80,7 @@ induction k .
 unfold presingleton .
 unfold premap_wf .
 unfold is_Some .
+unfold is_True .
 split .
 
 apply IHk .
@@ -86,8 +88,20 @@ apply IHk .
 
 Qed .
 
-Check map_car .
+Check map_prf .
 
-Definition empty {A : Type} : map A := map_car map_wf (preempty A).
+Definition empty {A : Type} : map A := make_map preempty (preempty_wf A).
 
+Definition singleton {A : Type} (k : nat) (v : A) : map A := make_map (presingleton k v) (presingleton_wf k v true ).
+
+
+Lemma preempty_prelookup {A : Type} (i : nat) : prelookup (@preempty A) i = None.
+Proof.
+
+induction i .
+
+unfold preempty, prelookup . reflexivity .
+unfold preempty, prelookup . reflexivity .
+
+Qed .
 
